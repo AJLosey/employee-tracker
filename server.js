@@ -9,13 +9,14 @@ const db = mysql.createConnection(
 
         user: 'root',
 
-        password: '',
-        database: 'courses_db'
+        password: 'Mollusk42',
+        database: 'employees_db'
     },
     console.log(`Connected to the courses_db database.`)
 );
 
 const inquirerLoop = function () {
+    console.log("start");
 inquirer
     .prompt({
         type: "list",
@@ -51,41 +52,38 @@ inquirer
 const viewDep = function () {
     db.query(`SELECT * FROM departments`,function (err, results) {
         console.table(results)
-    });
-inquirerLoop();
+    }).then(inquirerLoop());
 };
 
 const viewRoles = function () {
     db.query(`SELECT * FROM roles`,function (err, results) {
         console.table(results)
-    });
-inquirerLoop();
+    }).then(inquirerLoop());
 };
 
 const viewEmp = function () {
     db.query(`SELECT * FROM roles`,function (err, results) {
         console.table(results)
-    });
-inquirerLoop();
+    }).then(inquirerLoop());
 };
 
 const addDep = function () {
-    Inquirer
+    inquirer
         .prompt({
             type: "input",
             message: "What is the department name?",
             name: "depName"
         })
         .then((answers) => {
-    db.query(`INSERT INTO department (department_name) VALUES (${answers.depName})`,function (err, results) {
-        console.table(results)
-    });
-    inquirerLoop();
-        });
+            db.query(`INSERT INTO department (department_name) VALUES (${answers.depName})`,function (err, results) {
+                 console.table(results);
+            })
+        })
+    .then(inquirerLoop());
 };
 
 const addRole = function () {
-    Inquirer
+    inquirer
         .prompt({
             type: "input",
             message: "What is the title of the role?",
@@ -102,15 +100,15 @@ const addRole = function () {
             name: "relDep"
         })
         .then((answers) => {
-    db.query(`INSERT INTO roles (title, salary, department_id) VALUES (${answers.role}, ${answers.salary}, ${answers.relDep})`,function (err, results) {
-        console.table(results)
-    });
-    inquirerLoop();
-        });
+            db.query(`INSERT INTO roles (title, salary, department_id) VALUES (${answers.role}, ${answers.salary}, ${answers.relDep})`,function (err, results) {
+                console.table(results);
+            })
+        })
+    .then(inquirerLoop());
 };
 
 const addEmp = function () {
-    Inquirer
+    inquirer
         .prompt({
             type: "input",
             message: "What is their first name?",
@@ -132,15 +130,15 @@ const addEmp = function () {
             name: "manageId"
         })
         .then((answers) => {
-    db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (${answers.firstName}, ${answers.lastName}, ${answers.roleId}, ${answers.manageId})`,function (err, results) {
-        console.table(results)
-    });
-    inquirerLoop();
-        });
+             db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (${answers.firstName}, ${answers.lastName}, ${answers.roleId}, ${answers.manageId})`,function (err, results) {
+                 console.table(results);
+                 })
+             })
+        .then(inquirerLoop());
 };
 
 const updateEmpRole = function () {
-    Inquirer
+    inquirer
         .prompt({
             type: "input",
             message: "What is the id of the employee you'd like to update?",
@@ -152,9 +150,11 @@ const updateEmpRole = function () {
             name: "roleId"
         })
         .then((answers) => {
-    db.query(`UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${empId}`,function (err, results) {
-        console.table(results)
-    });
-    inquirerLoop();
-        });
+             db.query(`UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${empId}`,function (err, results) {
+                 console.table(results);
+                 })
+             })
+         .then(inquirerLoop());
 };
+
+inquirerLoop();
