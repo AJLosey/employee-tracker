@@ -160,7 +160,7 @@ const updateEmpRole = function () {
         }
     ])
         .then((answers) => {
-             db.query(`UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${empId}`,function (err, results) {
+             db.query(`UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${answers.empId}`,function (err, results) {
                  console.table(results);
                  })
              })
