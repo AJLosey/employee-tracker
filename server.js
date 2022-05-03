@@ -1,4 +1,3 @@
-
 const mysql = require('mysql2');
 var inquirer = require('inquirer');
 var cTable = require('console.table');
@@ -17,12 +16,14 @@ const db = mysql.createConnection(
 
 
 inquirer
-    .prompt({
+    .prompt([
+        {
         type: "list",
         message: "What would you like to do?",
         name: "startTask",
         choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update employee role"]
-    })
+    }
+])
     .then((answers) => {
         if (answers.startTask == "View all departments") {
             viewDep()
@@ -45,7 +46,8 @@ inquirer
         if (answers.startTask == "Update employee role") {
             updateEmpRole()
         }
-    });
+    })
+    .catch(error => console.log(error));
 
 
 const viewDep = function () {
@@ -68,21 +70,25 @@ const viewEmp = function () {
 
 const addDep = function () {
     inquirer
-        .prompt({
+        .prompt([
+            {
             type: "input",
             message: "What is the department name?",
             name: "depName"
-        })
+        }
+    ])
         .then((answers) => {
-           db.query(`INSERT INTO department (department_name) VALUES (${answers.depName})`,function (err, results) {
+           db.query(`INSERT INTO department (department_name) VALUES ("${answers.depName}")`,function (err, results) {
                  console.table(results);
             })
         })
+        .catch(error => console.log(error));
 };
 
 const addRole = function () {
     inquirer
-        .prompt({
+        .prompt([
+            {
             type: "input",
             message: "What is the title of the role?",
             name: "role"
@@ -96,17 +102,21 @@ const addRole = function () {
             type: "input",
             message: "What is the id of the relevant department?",
             name: "relDep"
-        })
+        }
+    ])
         .then((answers) => {
-            db.query(`INSERT INTO roles (title, salary, department_id) VALUES (${answers.role}, ${answers.salary}, ${answers.relDep})`,function (err, results) {
+            
+            db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${answers.role}", ${answers.salary}, ${answers.relDep})`,function (err, results) {
                 console.table(results);
             })
         })
+        .catch(error => console.log(error));
 };
 
 const addEmp = function () {
     inquirer
-        .prompt({
+        .prompt([
+            {
             type: "input",
             message: "What is their first name?",
             name: "firstName"
@@ -123,19 +133,22 @@ const addEmp = function () {
         },
         {
             type: "input",
-            message: "What is the id of their manager?",
+            message: "What is the id of their manager? Enter null if they have no manager.",
             name: "manageId"
-        })
+        }
+    ])
         .then((answers) => {
-             db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (${answers.firstName}, ${answers.lastName}, ${answers.roleId}, ${answers.manageId})`,function (err, results) {
+             db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answers.firstName}", "${answers.lastName}", ${answers.roleId}, ${answers.manageId})`,function (err, results) {
                  console.table(results);
                  })
              })
+             .catch(error => console.log(error));
 };
 
 const updateEmpRole = function () {
     inquirer
-        .prompt({
+        .prompt([
+            {
             type: "input",
             message: "What is the id of the employee you'd like to update?",
             name: "empId"
@@ -144,12 +157,14 @@ const updateEmpRole = function () {
             type: "input",
             message: "What is the id of their new role?",
             name: "roleId"
-        })
+        }
+    ])
         .then((answers) => {
              db.query(`UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${empId}`,function (err, results) {
                  console.table(results);
                  })
              })
+             .catch(error => console.log(error));
 };
 
 
