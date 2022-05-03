@@ -15,8 +15,7 @@ const db = mysql.createConnection(
     console.log(`Connected to the courses_db database.`)
 );
 
-const inquirerLoop = function () {
-    console.log("start");
+
 inquirer
     .prompt({
         type: "list",
@@ -46,11 +45,11 @@ inquirer
         if (answers.startTask == "Update employee role") {
             updateEmpRole()
         }
-    })
-};
+    });
+
 
 const viewDep = function () {
-    db.query(`SELECT * FROM departments`,function (err, results) {
+    db.query(`SELECT * FROM department`,function (err, results) {
         console.table(results)
     })
 };
@@ -62,7 +61,7 @@ const viewRoles = function () {
 };
 
 const viewEmp = function () {
-    db.query(`SELECT * FROM roles`,function (err, results) {
+    db.query(`SELECT * FROM employee`,function (err, results) {
         console.table(results)
     })
 };
@@ -153,4 +152,4 @@ const updateEmpRole = function () {
              })
 };
 
-inquirerLoop();
+
