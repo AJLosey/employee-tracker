@@ -32,7 +32,38 @@ const db = mysql.createConnection(
     console.log(`Connected to the courses_db database.`)
 );
 
-
+const inquirerLoop = function () {
+inquirer
+    .prompt({
+        type: "list",
+        message: "What would you like to do?",
+        name: "startTask",
+        choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update employee role"]
+    })
+    .then((answers) => {
+        if (answers.startTask == "View all departments") {
+            viewDep()
+        }
+        if (answers.startTask == "View all roles") {
+            viewRoles()
+        }
+        if (answers.startTask == "View all employees") {
+            viewEmp()
+        }
+        if (answers.startTask == "Add a department") {
+            addDep()
+        }
+        if (answers.startTask == "Add a role") {
+            addRole()
+        }
+        if (answers.startTask == "Add an employee") {
+            addEmp()
+        }
+        if (answers.startTask == "Update employee role") {
+            updateEmpRole()
+        }
+    })
+}
 
 
 
