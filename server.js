@@ -52,19 +52,19 @@ inquirer
 const viewDep = function () {
     db.query(`SELECT * FROM departments`,function (err, results) {
         console.table(results)
-    }).then(inquirerLoop());
+    })
 };
 
 const viewRoles = function () {
     db.query(`SELECT * FROM roles`,function (err, results) {
         console.table(results)
-    }).then(inquirerLoop());
+    })
 };
 
 const viewEmp = function () {
     db.query(`SELECT * FROM roles`,function (err, results) {
         console.table(results)
-    }).then(inquirerLoop());
+    })
 };
 
 const addDep = function () {
@@ -75,11 +75,10 @@ const addDep = function () {
             name: "depName"
         })
         .then((answers) => {
-            db.query(`INSERT INTO department (department_name) VALUES (${answers.depName})`,function (err, results) {
+           db.query(`INSERT INTO department (department_name) VALUES (${answers.depName})`,function (err, results) {
                  console.table(results);
             })
         })
-    .then(inquirerLoop());
 };
 
 const addRole = function () {
@@ -104,7 +103,6 @@ const addRole = function () {
                 console.table(results);
             })
         })
-    .then(inquirerLoop());
 };
 
 const addEmp = function () {
@@ -134,7 +132,6 @@ const addEmp = function () {
                  console.table(results);
                  })
              })
-        .then(inquirerLoop());
 };
 
 const updateEmpRole = function () {
@@ -154,7 +151,6 @@ const updateEmpRole = function () {
                  console.table(results);
                  })
              })
-         .then(inquirerLoop());
 };
 
 inquirerLoop();
