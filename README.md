@@ -20,7 +20,7 @@ A small demo of connecting input from inquirer to a database of employees
         
 ### Installation {#installation}
         
-Download the files from github, and run npm i. 
+Download the files from github, and run npm i. Enter your sql credentials in the mysql.createConnection function. Finally, run the schema.sql file to set up the database this program interacts with.
         
 ### Usage {#usage}
         
